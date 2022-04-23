@@ -158,7 +158,7 @@ int main()
 
 	float x = 0.0f, y = 0.0f;
 	float sunX = 0.0f, sunY = 0.0f, sunOuterRadius = 0.15f, sunInnerRadius = 0.11f;
-	float mercuryX = 0.2f, mercuryY = 0.0f, mercuryRadius = 0.02f, mercuryOrbit = 0.2f, mercurySpeed = 0.001f;
+	float mercuryX = 0.2f, mercuryY = 0.0f, mercuryRadius = 0.01f, mercuryOrbit = 0.2f, mercurySpeed = 0.001f;
 
 	// glEnable(GL_MULTISAMPLE);
 
@@ -168,7 +168,7 @@ int main()
 	//////////////////////////////////////////////////////////////////////////////////
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(0.0, 0.0, 0.51, 0.0);
+		glClearColor(0.0, 0.0, 0.10f, 0.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// glEnable(GL_LINE_SMOOTH);
