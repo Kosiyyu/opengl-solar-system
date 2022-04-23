@@ -4,113 +4,18 @@
 #include <cmath>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 //#define GL_MULTISAMPLE  0x809D
 
 constexpr auto pi = 3.14159265358979323846;
 
-//const int steps = 10;
+constexpr auto backgroundColor = "#000033";
+constexpr auto orbitColor = "#000033";
+
 const int sides = 9;
-//const float angle = pi * 2.f / steps;
-/*
-void drawCircle(float startX = 0.0f, float startY = 0.0f,float radius = 0.5f, float red = 0.1f, float blue = 0.1f, float green = 0.1f) {
-	float prevX = startX;
-	float prevY = startY - radius;
 
-	for (int i = 0; i < steps + 1; i++) {
-
-		float newX = startX + (radius * sin(angle * i));
-		float newY = startY + (- radius * cos(angle * i));
-
-		//glShadeModel(GL_SMOOTH);
-		glBegin(GL_TRIANGLES);
-		glColor3f(red, blue, green);
-		glVertex2f(startX, startY);
-		glVertex2f(prevX, prevY);
-		glVertex2f(newX, newY);
-		glEnd();
-
-		prevX = newX;
-		prevY = newY;
-	}
-}
-*/
-
-/*
-void drawCircletest(float startX = 0.0f, float startY = 0.0f, float radius = 0.5f, std::string hex = "#000000") {
-	hex = hex.substr(1, hex.length() - 1);
-	hex.insert(0, "0x");
-
-	int hexInteger;
-
-	std::stringstream ss;
-	ss << std::hex << hex;
-	ss >> hexInteger;
-
-	//std::cout << hexInteger;
-	//system("pause");
-
-	float red = ((hexInteger >> 16) & 0xFF) / 255.0;
-	float blue = ((hexInteger >> 8) & 0xFF) / 255.0;
-	float green = ((hexInteger) & 0xFF) / 255.0;
-
-	float prevX = startX;
-	float prevY = startY - radius;
-
-	for (int i = 0; i < steps + 1; i++) {
-
-		float newX = startX + (radius * sin(angle * i));
-		float newY = startY + (-radius * cos(angle * i));
-
-		//glShadeModel(GL_SMOOTH);
-		glBegin(GL_TRIANGLES);
-		glColor3f(red, blue, green);
-		glVertex2f(startX, startY);
-		glVertex2f(prevX, prevY);
-		glVertex2f(newX, newY);
-		glEnd();
-
-		prevX = newX;
-		prevY = newY;
-	}
-}
-*/
-
-
-/*
-void drawCircle1(float startX = 0.0f, float startY = 0.0f, float radius = 0.5f, std::string hex = "#000000") {
-	hex = hex.substr(1, hex.length() - 1);
-	hex.insert(0, "0x");
-
-	int hexInteger;
-
-	std::stringstream ss;
-	ss << std::hex << hex;
-	ss >> hexInteger;
-
-	float red = ((hexInteger >> 16) & 0xFF) / 255.0;
-	float blue = ((hexInteger >> 8) & 0xFF) / 255.0;
-	float green = ((hexInteger) & 0xFF) / 255.0;
-
-	float prevX = startX;
-	float prevY = startY - radius;
-
-	for (int i = 0; i < steps + 1; i++) {
-
-		float newX = startX + (radius * sin(angle * i));
-		float newY = startY + (-radius * cos(angle * i));
-
-		//glShadeModel(GL_SMOOTH);
-		glBegin(GL_POINTS);
-		glColor3f(red, green, blue);
-		glVertex3f(newX, newY, 0.0f);
-		glEnd();
-
-		prevX = newX;
-		prevY = newY;
-	}
-}
-*/
+int fps = 60;
 
 void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint sides, std::string hex)
 {
@@ -125,15 +30,15 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint sides, st
 
 	float red = ((hexInteger >> 16) & 0xFF) / 255.0;
 	float green = ((hexInteger >> 8) & 0xFF) / 255.0;
-	float blue = ((hexInteger) & 0xFF) / 255.0;
+	float blue = ((hexInteger)&0xFF) / 255.0;
 	/////////////////////////////////////////////////////////////////////////////
 	int numberOfVertices = sides + 2;
 
 	GLfloat twicePi = 2.0f * pi;
 
-	GLfloat* circleVerticesX = new GLfloat[numberOfVertices];
-	GLfloat* circleVerticesY = new GLfloat[numberOfVertices];
-	GLfloat* circleVerticesZ = new GLfloat[numberOfVertices];
+	GLfloat *circleVerticesX = new GLfloat[numberOfVertices];
+	GLfloat *circleVerticesY = new GLfloat[numberOfVertices];
+	GLfloat *circleVerticesZ = new GLfloat[numberOfVertices];
 
 	circleVerticesX[0] = x;
 	circleVerticesY[0] = y;
@@ -146,7 +51,7 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint sides, st
 		circleVerticesZ[i] = z;
 	}
 
-	GLfloat* allCircleVertices = new GLfloat[numberOfVertices * 3];
+	GLfloat *allCircleVertices = new GLfloat[numberOfVertices * 3];
 
 	for (int i = 0; i < numberOfVertices; i++)
 	{
@@ -165,7 +70,6 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint sides, st
 	delete[] circleVerticesY;
 	delete[] circleVerticesZ;
 	delete[] allCircleVertices;
-
 }
 
 void drawHollowCircle(GLfloat x = 0.0f, GLfloat y = 0.0f, GLfloat z = 0.0f, GLfloat radius = 0.5f, GLint sides = 50, std::string hex = "#000000")
@@ -181,7 +85,7 @@ void drawHollowCircle(GLfloat x = 0.0f, GLfloat y = 0.0f, GLfloat z = 0.0f, GLfl
 
 	float red = ((hexInteger >> 16) & 0xFF) / 255.0;
 	float blue = ((hexInteger >> 8) & 0xFF) / 255.0;
-	float green = ((hexInteger) & 0xFF) / 255.0;
+	float green = ((hexInteger)&0xFF) / 255.0;
 	/////////////////////////////////////////////////////////////////////////////
 	GLint numberOfVertices = sides + 1;
 
@@ -195,7 +99,7 @@ void drawHollowCircle(GLfloat x = 0.0f, GLfloat y = 0.0f, GLfloat z = 0.0f, GLfl
 	circleVerticesY[0] = y;
 	circleVerticesZ[0] = z;
 
-	for (int i = 0; i < numberOfVertices; i++)
+	for (int i = 0; i < numberOfVertices; i += 1)
 	{
 		circleVerticesX[i] = x + (radius * cos(i * doublePi / sides));
 		circleVerticesY[i] = y + (radius * sin(i * doublePi / sides));
@@ -223,16 +127,28 @@ void drawHollowCircle(GLfloat x = 0.0f, GLfloat y = 0.0f, GLfloat z = 0.0f, GLfl
 	delete[] allCircleVertices;
 }
 
+void drawSun(float sunX, float sunY, float sunOuterRadius, float sunInnerRadius, int sides, std::string outerColor = "#ffdf80", std::string innerColor = "#ffbf00")
+{
+	drawCircle(sunX, sunY, 0.0f, sunOuterRadius, sides, outerColor);
+	drawCircle(sunX, sunY, 0.0f, sunInnerRadius, sides, innerColor);
+}
 
-int main() {
-	GLFWwindow* window;
-	if (!glfwInit()) {
+void drawMercury(float mercuryX, float mercuryY, float mercuryRadius, int sides, std::string color = "#ffdf80")
+{
+	drawCircle(mercuryX, mercuryY, 0.0f, mercuryRadius, sides, color);
+}
+int main()
+{
+	GLFWwindow *window;
+	if (!glfwInit())
+	{
 		std::cout << "Init error";
 		return -1;
 	}
 
 	window = glfwCreateWindow(1000, 1000, "Hello", 0, 0);
-	if (!window) {
+	if (!window)
+	{
 		std::cout << "Window creation error";
 		glfwTerminate();
 		return -1;
@@ -241,43 +157,44 @@ int main() {
 	glfwMakeContextCurrent(window);
 
 	float x = 0.0f, y = 0.0f;
-	float sunX= 0.0f, sunY = 0.0f, sunOuterRadius = 0.15f, sunInnerRadius = 0.11f;
+	float sunX = 0.0f, sunY = 0.0f, sunOuterRadius = 0.15f, sunInnerRadius = 0.11f;
+	float mercuryX = 0.2f, mercuryY = 0.0f, mercuryRadius = 0.02f, mercuryOrbit = 0.2f, mercurySpeed = 0.001f;
 
-	//glEnable(GL_MULTISAMPLE);
+	// glEnable(GL_MULTISAMPLE);
 
 	int newSides = 100;
-
 	//////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////loop///////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////
-	while (!glfwWindowShouldClose(window)) {
-
-
-		glClearColor(1.0, 1.0, 1.0, 0.0);
+	while (!glfwWindowShouldClose(window))
+	{
+		glClearColor(0.0, 0.0, 0.51, 0.0);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
-		//glEnable(GL_LINE_SMOOTH);
-		//glEnable(GL_POLYGON_SMOOTH);
-		//glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		//glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
-		//my functions
-		//drawCircletest(x, y, 0.15f, "#ffcc00");
-		
-		drawHollowCircle(x, y, 0.0f, 0.2f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.3f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.4f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.5f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.6f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.7f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.8f, newSides, "#ffcc00");
-		drawHollowCircle(x, y, 0.0f, 0.9f, newSides, "#ffcc00");
-		drawCircle(sunX, sunY, 0.0f, sunOuterRadius, sides, "#ffdf80");
-		drawCircle(sunX, sunY, 0.0f, sunInnerRadius, sides, "#ffbf00");
+		// glEnable(GL_LINE_SMOOTH);
+		// glEnable(GL_POLYGON_SMOOTH);
+		// glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+		// glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
-		//x += 0.000001f;
-		//y += 0.000001f;
+		// my functions
+		// drawCircletest(x, y, 0.15f, "#ffcc00");
 
+		drawHollowCircle(x, y, 0.0f, 0.2f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.3f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.4f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.5f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.6f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.7f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.8f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.9f, newSides, "#ffffff");
+
+		drawSun(sunX, sunY, sunOuterRadius, sunInnerRadius, sides);
+		drawMercury(mercuryX, mercuryY, mercuryRadius, newSides, "#AAAB97");
+		// next planets here... drawVenus(); drawEarth(); something like that
+
+		mercuryX = (mercuryOrbit * cos(mercurySpeed * (2.0f * pi) / sides));
+		mercuryY = (mercuryOrbit * sin(mercurySpeed * ((2.0f * pi)) / sides));
+		mercurySpeed += 0.0005f;
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
