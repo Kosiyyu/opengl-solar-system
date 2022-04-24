@@ -137,11 +137,28 @@ void drawMercury(float mercuryX, float mercuryY, float mercuryRadius, int sides,
 {
 	drawCircle(mercuryX, mercuryY, 0.0f, mercuryRadius, sides, color);
 }
+void updateCoordsSpeed(float& x, float& y, float orbit, float& speed, float acceleration)
+{
+	x = (orbit * cos(speed * (2.0f * pi) / sides));
+	y = (orbit * sin(speed * ((2.0f * pi)) / sides));
+	speed += acceleration;
+}
 
-void drawPlanet(float planetX, float planetY, float planetRadius, int sides, std::string color = "#ffdf80")
+void drawMoon(float moonX, float moonY, float moonRadius, int sides, std::string hex = "#efefef")
+{
+	drawCircle(moonX, moonY, 0.0f, moonRadius, sides, hex);
+}
+
+void drawPlanet(float planetX, float planetY, float planetRadius, int sides, bool isMoon, float moonX, float moonY, std::string color = "#ffdf80")
 {
 	drawCircle(planetX, planetY, 0.0f, planetRadius, sides, color);
+	
+	if(isMoon)
+	{
+		drawMoon(moonX, moonY, 0.01f, sides, "#efefef");
+	}
 }
+
 
 
 int main()
@@ -167,12 +184,12 @@ int main()
 	float sunX = 0.0f, sunY = 0.0f, sunOuterRadius = 0.15f, sunInnerRadius = 0.11f;
 	float mercuryX = 0.2f, mercuryY = 0.0f, mercuryRadius = 0.02f, mercuryOrbit = 0.2f, mercurySpeed = 0.001f;
 	float wenusX = 0.3f, wenusY = 0.0f, wenusRadius = 0.03f, wenusOrbit = 0.3f, wenusSpeed = 0.0007f;
-	float earthX = 0.4f, earthY = 0.0f, earthRadius = 0.04f, earthOrbit = 0.4f, earthSpeed = 0.0005f;
-	float marsX = 0.5f, marsY = 0.0f, marsRadius = 0.03f, marsOrbit = 0.5f, marsSpeed = 0.0005f;
-	float jowiszX = 0.6f, jowiszY = 0.0f, jowiszRadius = 0.05f, jowiszOrbit = 0.6f, jowiszSpeed = 0.0008f;
-	float saturnX = 0.7f, saturnY = 0.0f, saturnRadius = 0.045f, saturnOrbit = 0.7f, saturnSpeed = 0.0003f;
-	float uranX = 0.8f, uranY = 0.0f, uranRadius = 0.042f, uranOrbit = 0.8f, uranSpeed = 0.0001f;
-	float neptunX = 0.9f, neptunY = 0.0f, neptunRadius = 0.042f, neptunOrbit = 0.9f, neptunSpeed = 0.00005f;
+	float earthX = 0.4f, earthY = 0.0f, earthRadius = 0.04f, earthOrbit = 0.4f, earthSpeed = 0.0005f, earthMoonX = earthX + earthRadius / 2 + 0.03f, earthMoonY = 0.0f, earthMoonSpeed = earthSpeed;
+	float marsX = 0.5f, marsY = 0.0f, marsRadius = 0.03f, marsOrbit = 0.5f, marsSpeed = 0.0005f, marsMoonX = marsX + marsRadius / 2 + 0.03f, marsMoonY = 0.0f, marsMoonSpeed = marsSpeed;
+	float jowiszX = 0.6f, jowiszY = 0.0f, jowiszRadius = 0.05f, jowiszOrbit = 0.6f, jowiszSpeed = 0.0008f, jowiszMoonX = jowiszX + jowiszRadius / 2 + 0.03f, jowiszMoonY = 0.0f, jowiszMoonSpeed = jowiszSpeed;
+	float saturnX = 0.7f, saturnY = 0.0f, saturnRadius = 0.045f, saturnOrbit = 0.7f, saturnSpeed = 0.0003f, saturnMoonX = saturnX + saturnRadius / 2 + 0.03f, saturnMoonY = 0.0f, saturnMoonSpeed = saturnSpeed;
+	float uranX = 0.8f, uranY = 0.0f, uranRadius = 0.042f, uranOrbit = 0.8f, uranSpeed = 0.0001f, uranMoonX = uranX + uranRadius / 2 + 0.03f, uranMoonY = 0.0f, uranMoonSpeed = uranSpeed;
+	float neptunX = 0.9f, neptunY = 0.0f, neptunRadius = 0.042f, neptunOrbit = 0.9f, neptunSpeed = 0.00005f, neptunMoonX = neptunX + neptunRadius / 2 + 0.03f, neptunMoonY = 0.0f, neptunMoonSpeed = neptunSpeed;
 	// glEnable(GL_MULTISAMPLE);
 
 	int newSides = 100;
@@ -202,40 +219,32 @@ int main()
 		drawHollowCircle(x, y, 0.0f, 0.9f, newSides, "#ffffff");
 
 		drawSun(sunX, sunY, sunOuterRadius, sunInnerRadius, sides);
-		drawPlanet(mercuryX, mercuryY, mercuryRadius, newSides, "#AAAB97");
-		drawPlanet(wenusX, wenusY, wenusRadius, newSides, "#E3BFA0");
-		drawPlanet(earthX, earthY, earthRadius, newSides, "#255998");
-		drawPlanet(marsX, marsY, marsRadius, newSides, "#EA7F5E");
-		drawPlanet(jowiszX, jowiszY, jowiszRadius, newSides, "#FCE0A5");
-		drawPlanet(saturnX, saturnY, saturnRadius, newSides, "#FACB93");
-		drawPlanet(uranX, uranY, uranRadius, newSides, "#1B83D8");
-		drawPlanet(neptunX, neptunY, neptunRadius, newSides, "#82BAE7");
+		drawPlanet(mercuryX, mercuryY, mercuryRadius, newSides, 0, 0.0f, 0.0f, "#AAAB97");
+		drawPlanet(wenusX, wenusY, wenusRadius, newSides, 0, 0.0f, 0.0f, "#E3BFA0");
+		drawPlanet(earthX, earthY, earthRadius, newSides, 1, earthMoonX, earthMoonY, "#255998");
+		drawPlanet(marsX, marsY, marsRadius, newSides, 1, marsMoonX, marsMoonY, "#EA7F5E");
+		drawPlanet(jowiszX, jowiszY, jowiszRadius, newSides, 1, jowiszMoonX, jowiszMoonY, "#FCE0A5");
+		drawPlanet(saturnX, saturnY, saturnRadius, newSides, 1, saturnMoonX, saturnMoonY, "#FACB93");
+		drawPlanet(uranX, uranY, uranRadius, newSides, 1, uranMoonX, uranMoonY, "#1B83D8");
+		drawPlanet(neptunX, neptunY, neptunRadius, newSides, 1, neptunMoonX, neptunMoonY, "#82BAE7");
 
-		mercuryX = (mercuryOrbit * cos(mercurySpeed * (2.0f * pi) / sides));
-		mercuryY = (mercuryOrbit * sin(mercurySpeed * ((2.0f * pi)) / sides));
-		wenusX = (wenusOrbit * cos(wenusSpeed * (2.0f * pi) / sides));
-		wenusY = (wenusOrbit * sin(wenusSpeed * ((2.0f * pi)) / sides));
-		earthX = (earthOrbit * cos(earthSpeed * (2.0f * pi) / sides));
-		earthY = (earthOrbit * sin(earthSpeed * ((2.0f * pi)) / sides));
-		marsX = (marsOrbit * cos(marsSpeed * (2.0f * pi) / sides));
-		marsY = (marsOrbit * sin(marsSpeed * ((2.0f * pi)) / sides));
-		jowiszX = (jowiszOrbit * cos(jowiszSpeed * (2.0f * pi) / sides));
-		jowiszY = (jowiszOrbit * sin(jowiszSpeed * ((2.0f * pi)) / sides));
-		saturnX = (saturnOrbit * cos(saturnSpeed * (2.0f * pi) / sides));
-		saturnY = (saturnOrbit * sin(saturnSpeed * ((2.0f * pi)) / sides));
-		uranX = (uranOrbit * cos(uranSpeed * (2.0f * pi) / sides));
-		uranY = (uranOrbit * sin(uranSpeed * ((2.0f * pi)) / sides));
-		neptunX = (neptunOrbit * cos(neptunSpeed * (2.0f * pi) / sides));
-		neptunY = (neptunOrbit * sin(neptunSpeed * ((2.0f * pi)) / sides));
+		updateCoordsSpeed(mercuryX, mercuryY, mercuryOrbit, mercurySpeed, 0.0005f);
+		updateCoordsSpeed(wenusX, wenusY, wenusOrbit, wenusSpeed, 0.0003f);
+		updateCoordsSpeed(earthX, earthY, earthOrbit, earthSpeed, 0.0002f);
+		updateCoordsSpeed(marsX, marsY, marsOrbit, marsSpeed, 0.0001f);
+		updateCoordsSpeed(jowiszX, jowiszY, jowiszOrbit, jowiszSpeed, 0.00002f);
+		updateCoordsSpeed(saturnX, saturnY, saturnOrbit, saturnSpeed, 0.00001f);
+		updateCoordsSpeed(uranX, uranY, uranOrbit, uranSpeed, 0.000007f);
+		updateCoordsSpeed(neptunX, neptunY, neptunOrbit, neptunSpeed, 0.000005f);
 		
-		mercurySpeed += 0.0005f;
-		wenusSpeed += 0.0003f;
-		earthSpeed += 0.0002f;
-		marsSpeed += 0.0001f;
-		jowiszSpeed += 0.00002f;
-		saturnSpeed += 0.00001f;
-		uranSpeed += 0.00001f;
-		neptunSpeed += 0.000009f;
+		//Moons
+		//updateCoordsSpeed(float& x, float& y, float orbit, float& speed, float acceleration)
+		updateCoordsSpeed(earthMoonX, earthMoonY, earthOrbit + 0.05f, earthMoonSpeed, 0.0002f);
+		updateCoordsSpeed(marsMoonX, marsMoonY, marsOrbit + 0.05f, marsMoonSpeed, 0.0001f);
+		updateCoordsSpeed(jowiszMoonX, jowiszMoonY, jowiszOrbit + 0.05f, jowiszMoonSpeed, 0.00002f);
+		updateCoordsSpeed(saturnMoonX, saturnMoonY, saturnOrbit + 0.05f, saturnMoonSpeed, 0.00001f);
+		updateCoordsSpeed(uranMoonX, uranMoonY, uranOrbit + 0.05f, uranMoonSpeed, 0.000007f);
+		updateCoordsSpeed(neptunMoonX, neptunMoonY, neptunOrbit + 0.05f, neptunMoonSpeed, 0.000005f);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
