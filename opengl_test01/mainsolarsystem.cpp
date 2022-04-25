@@ -211,12 +211,12 @@ int main()
 		// drawCircletest(x, y, 0.15f, "#ffcc00");
 
 		drawHollowCircle(x, y, 0.0f, 0.2f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.25f, newSides, "#ffffff");
 		drawHollowCircle(x, y, 0.0f, 0.3f, newSides, "#ffffff");
-		drawHollowCircle(x, y, 0.0f, 0.4f, newSides, "#ffffff");
-		drawHollowCircle(x, y, 0.0f, 0.5f, newSides, "#ffffff");
-		drawHollowCircle(x, y, 0.0f, 0.6f, newSides, "#ffffff");
-		drawHollowCircle(x, y, 0.0f, 0.7f, newSides, "#ffffff");
-		drawHollowCircle(x, y, 0.0f, 0.8f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.35f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.47f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.68f, newSides, "#ffffff");
+		drawHollowCircle(x, y, 0.0f, 0.82f, newSides, "#ffffff");
 		drawHollowCircle(x, y, 0.0f, 0.9f, newSides, "#ffffff");
 
 		drawSun(sunX, sunY, sunOuterRadius, sunInnerRadius, sides);
