@@ -189,7 +189,7 @@ int main()
 	float marsX = 0.35f, marsY = 0.0f, marsRadius = 0.01f, marsOrbit = marsX, marsSpeed = 0.0005f, marsMoonX = marsX + marsRadius / 2 + 0.03f, marsMoonY = 0.0f, marsMoonSpeed = marsSpeed;
 	float jowiszX = 0.47f, jowiszY = 0.0f, jowiszRadius = 0.05f, jowiszOrbit = jowiszX, jowiszSpeed = 0.0008f, jowiszMoonX = jowiszX + jowiszRadius / 2 + 0.03f, jowiszMoonY = 0.0f, jowiszMoonSpeed = jowiszSpeed;
 	float saturnX = 0.68f, saturnY = 0.0f, saturnRadius = 0.045f, saturnOrbit = saturnX, saturnSpeed = 0.0003f;
-	float uranX = 0.82f, uranY = 0.0f, uranRadius = 0.3f, uranOrbit = uranX, uranSpeed = 0.0001f, uranMoonX = uranX + uranRadius / 2 + 0.03f, uranMoonY = 0.0f, uranMoonSpeed = uranSpeed;
+	float uranX = 0.82f, uranY = 0.0f, uranRadius = 0.03f, uranOrbit = uranX, uranSpeed = 0.0001f, uranMoonX = uranX + uranRadius / 2 + 0.03f, uranMoonY = 0.0f, uranMoonSpeed = uranSpeed;
 	float neptunX = 0.9f, neptunY = 0.0f, neptunRadius = 0.03f, neptunOrbit = neptunX, neptunSpeed = 0.00005f, neptunMoonX = neptunX + neptunRadius / 2 + 0.03f, neptunMoonY = 0.0f, neptunMoonSpeed = neptunSpeed;
 	// glEnable(GL_MULTISAMPLE);
 
