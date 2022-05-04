@@ -10,8 +10,6 @@ constexpr auto pi = 3.14159265358979323846;
 
 const int sides = 9;
 
-int fps = 60;
-
 void drawCircle(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLint sides, std::string hex)
 {
 	hex = hex.substr(1, hex.length() - 1);
